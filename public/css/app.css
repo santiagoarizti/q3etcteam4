@@ -1,5 +1,5 @@
 body {
-	padding-top:50px;
+	padding-top:70px;
 }
 
 .ng-dirty.ng-invalid {
@@ -7,4 +7,8 @@ body {
 }
 .ng-dirty.ng-valid {
 	border-color:green;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+	width: 850px;
 }

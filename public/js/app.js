@@ -1,41 +1,53 @@
-var app = angular.module('mainApp', ['ngSanitize']);
+var app = angular.module('mainApp', ['ngSanitize','ngDialog']);
 
-app.controller('mainCtrl', function($http, $sanitize){
-	var model = this;
-	model.subject = '';
-	model.to = '';
-	model.html = '';
+app.controller('mainCtrl', function($scope, $http, $sanitize, ngDialog){
+	$scope.subject = '';
+	$scope.to = '';
+	$scope.html = 'some <strong>H</strong>TML';
 	
-	model.sending = false;
+	$scope.sending = false;
 	
-	model.sanitizedHtml = function(){
+	$scope.sanitizedHtml = function(){
 		try {
-			return $sanitize(model.html);
+			return $sanitize($scope.html);
 		} catch (error) {
 			return '';
 		}
 		return '';
 	};
 	
-	model.sendEmail = function () {
-		model.sending = true;
+	$scope.sendEmail = function () {
+		$scope.sending = true;
 		$http.post('/api/sendEmail', {
-			subject: model.subject,
-			to: model.to,
-			html: model.sanitizedHtml()
+			subject: $scope.subject,
+			to: $scope.to,
+			html: $scope.sanitizedHtml()
 		}).
 		success(function(data, status, headers, config) {
-			model.clearForm();
-			model.sending = false;
+			$scope.clearForm();
+			$scope.sending = false;
+			
+			ngDialog.open({
+				template: 'secondDialog',
+				className: 'ngdialog-theme-default ngdialog-theme-custom'				
+			});
 		}).error(function(){
-			model.sending = false;			
+			$scope.sending = false;			
 		});
 	};
 	
-	model.clearForm = function(){
-		model.subject = '';
-		model.to = '';
-		model.html = '';
-		model.sending = false;
+	$scope.openDialog = function(){
+		ngDialog.open({
+			template: 'firstDialog',
+			scope: $scope,
+			className: 'ngdialog-theme-default ngdialog-theme-custom'
+		});
+	};
+	
+	$scope.clearForm = function(){
+		$scope.subject = '';
+		$scope.to = '';
+		$scope.html = '';
+		$scope.sending = false;
 	};
 });
