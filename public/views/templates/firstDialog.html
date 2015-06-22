@@ -1,0 +1,12 @@
+<div class="ngdialog-message">
+        
+	<h2><span ng-show="subject == ''" style="color:lightgray">Subject</span>{{subject}}</h2>
+	<div style="font-size:small;color:gray"></div>
+	<div><b>From</b> ETC Notification Service</div>
+	<div><b>To</b> {{to}}</div>
+	<div style="border:1px solid gray;min-height:10em;padding:1em;font-size:1.2em" ng-bind-html="sanitizedHtml()"></div>
+
+</div>
+<!--<div class="ngdialog-buttons mt">
+	<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="next()">►</button>
+</div>-->

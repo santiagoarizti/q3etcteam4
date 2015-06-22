@@ -12,3 +12,8 @@ body {
 .ngdialog.ngdialog-theme-default .ngdialog-content {
 	width: 850px;
 }
+
+.space-top {
+	padding-top:20px;
+	margin-top:20px;
+}

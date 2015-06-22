@@ -1,6 +1,35 @@
-var app = angular.module('mainApp', ['ngSanitize','ngDialog']);
+var app = angular.module('mainApp', ['ngSanitize','ngDialog','ngRoute']);
 
-app.controller('mainCtrl', function($scope, $http, $sanitize, ngDialog){
+app.config(function ($routeProvider){
+	$routeProvider.when('/email', {
+		templateUrl: 'views/email.html',
+		controller: 'emailCtrl',
+		isViewEnabled: true,
+		isAuthenticationNeeded: false
+	}).when('/sms', {
+		templateUrl: 'views/sms.html',
+		controller: 'smsCtrl',
+		isViewEnabled: true,
+		isAuthenticationNeeded: false
+	}).when('/im', {
+		templateUrl: 'views/im.html',
+		controller: 'imCtrl',
+		isViewEnabled: true,
+		isAuthenticacionNeeded: false
+	}).otherwise({
+		redirectTo: '/email'
+	});
+});
+
+app.controller('mainCtrl', function($scope, $location){
+	
+	$scope.activeTab = 'email'; // email, sms, im
+	try {$scope.activeTab=$location.$$path.split("/")[1];}catch(any){}
+	
+});
+
+app.controller('emailCtrl', function($scope, $sanitize, $http, ngDialog){
+	
 	$scope.subject = '';
 	$scope.to = '';
 	$scope.html = 'some <strong>H</strong>TML';
@@ -28,7 +57,7 @@ app.controller('mainCtrl', function($scope, $http, $sanitize, ngDialog){
 			$scope.sending = false;
 			
 			ngDialog.open({
-				template: 'secondDialog',
+				template: 'views/templates/secondDialog.html',
 				className: 'ngdialog-theme-default ngdialog-theme-custom'				
 			});
 		}).error(function(){
@@ -38,7 +67,7 @@ app.controller('mainCtrl', function($scope, $http, $sanitize, ngDialog){
 	
 	$scope.openDialog = function(){
 		ngDialog.open({
-			template: 'firstDialog',
+			templateUrl: 'views/templates/firstDialog.html',
 			scope: $scope,
 			className: 'ngdialog-theme-default ngdialog-theme-custom'
 		});
@@ -49,5 +78,15 @@ app.controller('mainCtrl', function($scope, $http, $sanitize, ngDialog){
 		$scope.to = '';
 		$scope.html = '';
 		$scope.sending = false;
+		
+		$scope.emailForm.$setPristine();
 	};
+});
+
+app.controller('smsCtrl', function($scope){
+	
+});
+
+app.controller('imCtrl', function($scope){
+	
 });

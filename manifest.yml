@@ -1,0 +1,9 @@
+applications:
+- name: notification-service
+  mem: 128M
+  disk: 512M
+  stackato:
+    ignores:
+    - .git
+    - .gitignore
+    - node_modules
