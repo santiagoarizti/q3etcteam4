@@ -1,0 +1,52 @@
+{
+  "actions": [
+    {
+      "actionName": "email",
+      "actionId": "1",
+      "lastChanged": "2015-06-22T00:00:00Z",
+      "fields": [
+        {
+          "required": "true",
+          "key": "message",
+          "type": "string",
+          "maxlength": "0"
+        },
+        {
+          "required": "false",
+          "key": "subject",
+          "type": "string",
+          "maxlength": "50"
+        },
+        {
+          "required": "true",
+          "key": "recipient",
+          "type": "string",
+          "maxlength": "255"
+        }
+      ]
+    },
+    {
+      "actionName": "sms",
+      "actionId": "2",
+      "lastChanged": "2015-06-22T00:00:00Z",
+      "fields": [
+        {
+          "required": "true",
+          "key": "carrier",
+          "type": "string",
+          "maxlength": "50",
+          "acceptedValues": [
+            "verizon",
+            "att"
+          ]
+        },
+        {
+          "required": "true",
+          "key": "recipient",
+          "type": "string",
+          "maxlength": "255"
+        }
+      ]
+    }
+  ]
+}
