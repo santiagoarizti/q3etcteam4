@@ -3,16 +3,9 @@ var fileData = require('./docs/actions.json');
 exports.getDelta = function(lastUpdateDate){
 	
 	var returnActions = [];
-	//var fileData =	fs.readFile("./docs/actions.json", "utf8");
 
-	console.log(lastUpdateDate);
-	console.log(fileData);
-	console.log("test");
-	
 	if (fileData != undefined)
-	{
-		//var data = JSON.parse(fileData);
-		
+	{		
 		var acts = fileData.actions;
 		
 		acts.forEach(function(obj){
