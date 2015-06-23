@@ -2,7 +2,7 @@ var nodemailer = require('nodemailer');
 var _ = require('underscore');
 
 // create reusable transporter object using SMTP transport
-
+/*
 var transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
@@ -10,11 +10,22 @@ var transporter = nodemailer.createTransport({
         pass: 'its a secret to everybody'
     }
 });
+*/
+
+var smtpServer = process.env.SMTP_SERVER || "smtp-americas.hp.com";
+var defaultFrom = process.env.ETC_FROM || "etc3Team4@hp.com";
+
+var transporter = nodemailer.createTransport({
+   host: smtpServer
+});
+
+console.log("smtpServer=" + smtpServer);
+console.log("defaultFrom=" + defaultFrom);
 
 exports.sendMail = function(mailOptions){
     // send mail with defined transport object
     var theEmailOptions = _.extend({
-        from: 'auto', // sender address, is ignored by gmail
+        from: defaultFrom, // sender address, is ignored by gmail
         //to: 'input, baz@blurdybloop.com', // list of receivers
         subject: 'Mail from Node', // Subject line
         //text: 'unused', // plaintext body
