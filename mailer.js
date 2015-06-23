@@ -26,10 +26,9 @@ exports.sendMail = function(mailOptions){
     // send mail with defined transport object
     var theEmailOptions = _.extend({
         from: defaultFrom, // sender address, is ignored by gmail
-        //to: 'input, baz@blurdybloop.com', // list of receivers
+        to: 'q3etcteam4@gmail.com', // list of receivers
         subject: 'Mail from Node', // Subject line
-        //text: 'unused', // plaintext body
-        html: '<b>Mail from node in html format</b>' // html body
+        html: 'Mail from node in <b>html format</b>' // html body
     }, mailOptions);
     
     transporter.sendMail(theEmailOptions, function(error, info){
@@ -44,4 +43,31 @@ exports.sendMail = function(mailOptions){
     console.log(theEmailOptions);
 };
 
-
+exports.sendSMS = function(smsOptions){
+    // send sms as email
+    var theSmsOptions = _.extend({
+        from: defaultFrom, // sender address, is ignored by gmail
+        phone: '5555555555',
+        carrier: 'att',
+        subject: 'sms', // Subject line
+        text: 'default text', // plaintext body
+    }, smsOptions);
+    
+    var carriers = {
+      "att": "txt.att.net",
+      "verizon": "vtext.com"  
+    };
+    
+    theSmsOptions.to = theSmsOptions.phone + "@" + carriers[theSmsOptions.carrier];
+    
+    transporter.sendMail(theSmsOptions, function(error, info){
+        if(error){
+            return console.log(error);
+        }
+        console.log('Message sent: ' + info.response);
+    
+    });
+    
+    console.log('Sending email with following options:');
+    console.log(theEmailOptions);
+};

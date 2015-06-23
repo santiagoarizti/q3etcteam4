@@ -87,6 +87,39 @@ app.controller('smsCtrl', function($scope){
 	
 });
 
-app.controller('imCtrl', function($scope){
+app.controller('imCtrl', function($scope, $http, ngDialog){
+	//$scope.username = '';
+	$scope.channel = '';
+	$scope.text = '';
 	
+	$scope.sending = false;
+	
+	$scope.sendIm = function () {
+		$scope.sending = true;
+		$http.post('/api/sendSlackMsg', {
+			//username: $scope.username,
+			channel: $scope.channel,
+			text: $scope.text
+		}).
+		success(function(data, status, headers, config) {
+			$scope.clearForm();
+			$scope.sending = false;
+			
+			ngDialog.open({
+				template: 'views/templates/secondDialog.html',
+				className: 'ngdialog-theme-default ngdialog-theme-custom'				
+			});
+		}).error(function(){
+			$scope.sending = false;
+		});
+	};
+	
+	$scope.clearForm = function(){
+		$scope.subject = '';
+		$scope.to = '';
+		$scope.html = '';
+		$scope.sending = false;
+		
+		$scope.emailForm.$setPristine();
+	};
 });
