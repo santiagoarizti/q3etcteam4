@@ -15,6 +15,13 @@ router.get('/getDelta', function(req, res, next) {
     res.send(JSON.stringify(data));
 });
 
+router.get('/getAction', function (req, res, next) {
+    var data = actions.getAction(req.query.actionId);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(data));
+});
+
+
 router.post('/sendEmail', function(req, res, next){
 	mailer.sendMail({
 	    subject: req.body.subject,
